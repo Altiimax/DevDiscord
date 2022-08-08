@@ -24,7 +24,6 @@ async def roles(ctx):
 
 @bot.event
 async def on_raw_reaction_add(payload: discord.RawReactionActionEvent):
-  ChID = 1001903262942896290
   if str(payload.emoji) == "❌":
     test1 = discord.utils.get(payload.member.guild.roles, name="test1")
     await payload.member.add_roles(test1)
