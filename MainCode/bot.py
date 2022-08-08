@@ -11,8 +11,23 @@ from discord.ext import commands
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD = os.getenv('DISCORD_GUILD')
+CHANNEL = os.getenv('CHANNEL_ID')
 
 bot = commands.Bot(command_prefix='!')
+
+@bot.command(name='reaction')
+async def roles(ctx):
+    global IDMessage
+    reaction = await ctx.reply("Select your Role")
+
+    await reaction.add_reaction('❌')
+
+@bot.event
+async def on_raw_reaction_add(payload: discord.RawReactionActionEvent):
+  ChID = 1001903262942896290
+  if str(payload.emoji) == "❌":
+    test1 = discord.utils.get(payload.member.guild.roles, name="test1")
+    await payload.member.add_roles(test1)
 
 @bot.command(name='99', help='Responds with a random quiote from Brooklyn Nine-Nine')
 async def nine_nine(ctx):
@@ -50,5 +65,6 @@ async def create_channel(ctx, channel_name: str):
 async def on_command_error(ctx, error):
     if isinstance(error, commands.errors.CheckFailure):
         await ctx.send('You do not have the correct role for this command.')
+
 
 bot.run(TOKEN)
