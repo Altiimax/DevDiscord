@@ -11,22 +11,33 @@ from discord.ext import commands
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD = os.getenv('DISCORD_GUILD')
-CHANNEL = os.getenv('CHANNEL_ID')
+CHANNEL = int(os.getenv('CHANNEL_ID'))
 
 bot = commands.Bot(command_prefix='!')
+client = discord.Client()
 
-@bot.command(name='reaction')
-async def roles(ctx):
-    global IDMessage
-    reaction = await ctx.reply("Select your Role")
+@bot.event
+async def on_ready():
+    channel = bot.get_channel(CHANNEL)
+    reaction = await channel.send("Select your Role")
 
-    await reaction.add_reaction('❌')
+    await reaction.add_reaction('❤️')
+    await reaction.add_reaction('💛')
+    await reaction.add_reaction('💚')
 
 @bot.event
 async def on_raw_reaction_add(payload: discord.RawReactionActionEvent):
-  if str(payload.emoji) == "❌":
+  if str(payload.emoji) == "❤️":
     test1 = discord.utils.get(payload.member.guild.roles, name="test1")
     await payload.member.add_roles(test1)
+ 
+  elif str(payload.emoji) == "💛":
+    test2 = discord.utils.get(payload.member.guild.roles, name="test2")
+    await payload.member.add_roles(test2)
+ 
+  elif str(payload.emoji) == "💚":
+    test3 = discord.utils.get(payload.member.guild.roles, name="test3")
+    await payload.member.add_roles(test3)
 
 @bot.command(name='99', help='Responds with a random quiote from Brooklyn Nine-Nine')
 async def nine_nine(ctx):
@@ -67,3 +78,4 @@ async def on_command_error(ctx, error):
 
 
 bot.run(TOKEN)
+client.run(TOKEN)
