@@ -6,9 +6,9 @@ class Hello(commands.Cog):
     def __init__(self, bot):
         self.bot=bot
 
-    @commands.command()
+    @commands.command(help=('Let the bot wave at you and wish you an amazing day !'))
     async def hello(self, ctx):
-        await ctx.send('Hello @everyone!')
+        await ctx.reply('Hello you ! :wave: , I hope you have an amazing day!')
 
 
 def setup(bot):
