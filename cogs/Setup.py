@@ -12,6 +12,7 @@ class Setup(commands.Cog):
         self.bot=bot
 
     @commands.Cog.listener()
+    # On bot.on_ready, send a message to the main channel with 3 reactions to get roles added automatically when the user reacts to one of the 3 roles
     async def on_ready(self):
         channel = self.bot.get_channel(CHANNEL)
         reaction = await channel.send("Select your Role")
@@ -22,6 +23,7 @@ class Setup(commands.Cog):
         print("Bot is ready to roll!")
 
     @commands.Cog.listener()
+    # Add the role linked to the react emoji to the user who reacted to it
     async def on_raw_reaction_add(self, payload: discord.RawReactionActionEvent):
         if str(payload.emoji) == "❤️":
             test1 = discord.utils.get(payload.member.guild.roles, name="test1")

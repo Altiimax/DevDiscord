@@ -14,7 +14,7 @@ class Cat(commands.Cog):
 
     @commands.command(help=("Posts a random picture of everyone's favourite cat : Mido !"))
     async def mido(self, ctx):
-        await ctx.send(file=discord.File(select_random_image_path()))
+        await ctx.reply(file=discord.File(select_random_image_path()))
 
 
 def setup(bot):
